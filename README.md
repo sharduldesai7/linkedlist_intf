@@ -2,4 +2,4 @@
 
 Linked list and printing.
 
-Heap building and printing.\Will add heapsort.
+Heap building and printing. Will add heapsort.
