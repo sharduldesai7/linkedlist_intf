@@ -67,7 +67,7 @@ void list_intf::display_list(){
 	return;
 }
 
-Data list_intf::create_datapacket(int int_data, char char_data){
+Data Data::create_datapacket(int int_data, char char_data){
 	Data data;
 	data.int_data = int_data;
 	data.char_data = char_data;

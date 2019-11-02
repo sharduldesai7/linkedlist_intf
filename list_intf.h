@@ -9,9 +9,10 @@ class Data
 	public:
 	int int_data;
 	char char_data;
+	Data create_datapacket(int int_data, char char_data);
 };
 
-class Node
+class Node : public Data
 {
 	public:
 	Node *next = NULL;
@@ -19,7 +20,7 @@ class Node
 	Data data;
 };
 
-class list_intf
+class list_intf : public Node
 {
 	public:
 		Node *head;
@@ -32,7 +33,6 @@ class list_intf
 		void insert_in_front(Data data);
 		void insert_in_between(Data data, Node *node);
 		void display_list();
-		Data create_datapacket(int int_data, char char_data);
 		void remove_node(Node *node);
 
 	private:
