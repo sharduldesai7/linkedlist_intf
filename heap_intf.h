@@ -1,8 +1,8 @@
 #ifndef HEAP_INTF_H
 #define HEAP_INTF_H
 #include <iostream>
-#include "../linkedlist_intf/list_intf.h"
-#include "../linkedlist_intf/includeme.h"
+#include "list_intf.h"
+#include "includeme.h"
 
 class Heap_node : public Data
 {
