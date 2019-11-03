@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -g -Wall
-SRCS = heap_intf.cpp
+SRCS = heap_intf.cpp list_intf.cpp
 PROG = heap_intf
 
 $(PROG):$(SRCS)

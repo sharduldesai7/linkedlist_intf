@@ -25,8 +25,13 @@ class heap_intf : public Heap_node
 
 		heap_intf();
 		~heap_intf();
-		void insert_into_heap(Heap_node *node, Heap_node *current);
-		void print_heap(Heap_node *node);
+		void insert_into_tree(Heap_node *node, Heap_node *current);
+		void print_tree(Heap_node *node);
+		void heapify(Heap_node *begin);
+		Heap_node *swap_parent(Heap_node *parent, Heap_node *child);
+		Bool min_heap(Heap_node *node);
+		Heap_node *swap_root(Heap_node *node);	//to be implemented
+
 };
 
 #endif //HEAP_INTF_H

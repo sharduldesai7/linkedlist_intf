@@ -92,7 +92,7 @@ list_intf::~list_intf(){
 }
 
 
-int main(){
+/*int main(){
 	list_intf list;
 	list.insert_in_front(list.create_datapacket(45, 'd'));
 	list.insert_in_front(list.create_datapacket(92, 'e'));
@@ -111,6 +111,6 @@ int main(){
 	list.display_list();
 	DEBUG(" ");
 	return 0;
-}
+}*/
 
 

@@ -15,14 +15,7 @@ heap_intf::~heap_intf(){
 
 }
 
-Data Data::create_datapacket(int int_data, char char_data){
-        Data data;
-        data.int_data = int_data;
-        data.char_data = char_data;
-        return data;
-}
-
-void heap_intf::insert_into_heap(Heap_node *node, Heap_node *current){	
+void heap_intf::insert_into_tree(Heap_node *node, Heap_node *current){	
 	if (current == NULL){
 		current = node;	//Adding root node
 		//DEBUG("first if");
@@ -60,42 +53,20 @@ void heap_intf::insert_into_heap(Heap_node *node, Heap_node *current){
 		//DEBUG(current->right_sib);
 		//exit(1);
 		//current->right_sib->left_sib = current;
-		heap_intf::insert_into_heap(node, current->right_sib);
+		heap_intf::insert_into_tree(node, current->right_sib);
 		return;
 	}
 	while(current->left_sib != NULL){		
 		//DEBUG("while");
 		current = current->left_sib;
 	}
-	heap_intf::insert_into_heap(node, current->left);
+	heap_intf::insert_into_tree(node, current->left);
 
 	return;
 }
 
-/*void heap_intf::print_heap(Heap_node *node){
 
-	//DEBUG("in print");
-	if (node == NULL)
-		return;
-	Heap_node *to_print;
-	to_print = node;
-
-	std::cout << to_print->data.int_data << to_print->data.char_data << " ";
-
-	if(to_print->right_sib !=NULL){
-		heap_intf::print_heap(to_print->right_sib);		
-	}
-	if((to_print->right == NULL) && (to_print->right_sib == NULL))
-		return;
-	while(to_print->left_sib != NULL)
-		to_print = to_print->left_sib;
-	heap_intf::print_heap(to_print->left);
-	return;
-
-
-}*/
-
-void heap_intf::print_heap(Heap_node *node){
+void heap_intf::print_tree(Heap_node *node){
 	if (node == NULL)
 		return;
 	std::cout << node->data.int_data << node->data.char_data << " ";
@@ -108,8 +79,90 @@ void heap_intf::print_heap(Heap_node *node){
 		node = node->left_sib;
 	node = node->left;
 	std::cout << " " << std::endl;
-	heap_intf::print_heap(node);
+	heap_intf::print_tree(node);
 	return;
+}
+
+Heap_node* heap_intf::swap_parent(Heap_node *parent, Heap_node *child, bool child_branch){
+	Heap_node *temp = NULL;
+	if(child_branch){
+		temp = parent;
+
+		temp->right = child->right;
+		temp->left = child->left;
+		temp->right_sib = child->right_sib;
+		temp->left_sib = child->left_sib;
+		temp->prev = child;
+
+		child->right = parent;
+		child->right_sib = parent->right;
+		child->left_sib = parent->left_sib;
+		child->left = parent->left;
+		child->prev = parent->prev;
+
+		parent = temp;
+	}
+	if(!child_branch){
+		temp = parent;
+
+		temp->right = child->right;
+		temp->left = child->left;
+		temp->right_sib = child->right_sib;
+		temp->left_sib = child->left_sib;
+		temp->prev = child;
+
+		child->left = parent;
+		child->right_sib = parent->right;
+		child->left_sib = parent->left_sib;
+		child->right = parent->right;
+		child->prev = parent->prev;
+
+		parent = temp;
+	}
+	return child;
+}
+
+void heap_intf::heapify(Heap_node *begin){		//writing for min heap
+	Heap_node *node = begin;	
+	while(node->next->next != NULL)
+		node = node->next;
+	while(node->right_sib == NULL){
+		if(node->left->data.int_data > node->right->data.int_data)
+			node = heap_intf::swap_parent(node, node->right, 1);
+		else
+			node = heap_intf::swap_parent(node, node->left, 0);
+		node = node->right_sib;
+	}
+	while(node->left_sib == NULL)
+		node = node->left_sib;
+	if(node->prev != NULL){		//reached root
+		node = node->prev;
+		heapify(node);
+	}
+	return;
+	
+}
+
+Bool heap_intf::min_heap(Heap_node *node){
+	if(node == NULL)	//if end is reached
+		return TRUE;
+	if((node->left != NULL) || (node->right != NULL)){	//if leaf nodes reached
+		if(node->left->data.int_data < node->data.int_data)		
+			return FALSE;
+		else if(node->right->data.int_data < node->data.int_data)
+			return FALSE;
+	}
+	if(node->right_sib != NULL){
+		node = node->right_sib;
+		if(!min_heap(node))
+			return FALSE
+	}
+	while(node->left_sib != NULL)
+		node = node->left_sib;
+	if(min_heap(node->left))
+		return TRUE;
+
+	
 }
 
 int main(int argc, char *argv[]){
@@ -118,12 +171,12 @@ int main(int argc, char *argv[]){
 
 	for(int i = 0; i < atoi(argv[1]); i++){
 		Heap_node *node = new Heap_node();
-		Data d = hp.create_datapacket(i,'s');
+		Data d = hp.create_datapacket(std::rand()%200,'s');
 		node->data = d;
-		hp.insert_into_heap(node, hp.root);
+		hp.insert_into_tree(node, hp.root);
 	}
 
-	hp.print_heap(hp.root);
+	hp.print_tree(hp.root);
 
 	return 0;
 }
