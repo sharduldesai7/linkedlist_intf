@@ -143,26 +143,18 @@ void heap_intf::heapify(Heap_node *begin){		//writing for min heap
 	
 }
 
-Bool heap_intf::min_heap(Heap_node *node){
-	if(node == NULL)	//if end is reached
-		return TRUE;
-	if((node->left != NULL) || (node->right != NULL)){	//if leaf nodes reached
-		if(node->left->data.int_data < node->data.int_data)		
-			return FALSE;
-		else if(node->right->data.int_data < node->data.int_data)
-			return FALSE;
+int heap_intf::get_tree_depth(){
+	Heap_node *node = this->root;
+	int tree_depth = 0;
+	while(node->left != NULL){
+		node = node->left;
+		tree_depth++;
 	}
-	if(node->right_sib != NULL){
-		node = node->right_sib;
-		if(!min_heap(node))
-			return FALSE
-	}
-	while(node->left_sib != NULL)
-		node = node->left_sib;
-	if(min_heap(node->left))
-		return TRUE;
+	return tree_depth;
+}	
 
-	
+Bool heap_intf::min_heap(Heap_node *node){
+
 }
 
 int main(int argc, char *argv[]){
