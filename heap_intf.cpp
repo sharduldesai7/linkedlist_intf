@@ -124,8 +124,8 @@ Heap_node* heap_intf::swap_parent(Heap_node *parent, Heap_node *child, bool chil
 
 void heap_intf::heapify(Heap_node *begin){		//writing for min heap
 	Heap_node *node = begin;	
-	while(node->next->next != NULL)
-		node = node->next;
+	while(node->left->left != NULL)
+		node = node->left;
 	while(node->right_sib == NULL){
 		if(node->left->data.int_data > node->right->data.int_data)
 			node = heap_intf::swap_parent(node, node->right, 1);
@@ -143,6 +143,33 @@ void heap_intf::heapify(Heap_node *begin){		//writing for min heap
 	
 }
 
+Heap_node *swap_root(Heap_node *node){
+	Heap_node *root = this->root;
+	Heap_node *temp  = NULL;
+	while(node->left != NULL)
+		node = node->left;
+	while(node->right_sib != NULL)
+		node = node->right_sib;	//got the last node
+	
+	if(node->prev->left != NULL)
+		node->prev->left = NULL;
+	else if(node->prev->right != NULL)
+		node->prev->right = NULL;
+	node->prev = root-prev;
+	if(node->left_sib != NULL)
+		node->left_sib->right_sib = NULL;
+	node->left_sib = root->left_sib;
+	node->left = root->left;
+	node->right = root->right;
+	root->left->prev = node->left;
+	root->right->prev = node->right;
+	this->root = node;
+	root->left = NULL;
+	root->right = NULL;
+
+	return root;
+}
+
 int heap_intf::get_tree_depth(){
 	Heap_node *node = this->root;
 	int tree_depth = 0;
@@ -153,22 +180,70 @@ int heap_intf::get_tree_depth(){
 	return tree_depth;
 }	
 
-Bool heap_intf::min_heap(Heap_node *node){
+bool heap_intf::check_min_heap(){
+	int dep = heap_intf::get_tree_depth();
+	Heap_node *node = this->root;
+	while(dep != 0){
+		if(heap_intf::min_heap(node)){
+			if(node->right_sib != NULL){
+				node = node->right_sib;
+			}
+			else{
+				while(node->left_sib != NULL){
+					node = node->left_sib;
+				}
+				node = node->left;
+			}
+		}
+		else
+			return FALSE;
+		dep--;
+	}
+	
+}
 
+
+bool heap_intf::min_heap(Heap_node *node){	
+	if(node->left != NULL){
+		if(node->data.int_data > node->left->data.int_data)
+			return FALSE;
+	}
+	if(node->right != NULL){
+		if(node->data.int_data > node->right->data.int_data)
+			return FALSE;
+	}
+	else
+		return TRUE;
 }
 
 int main(int argc, char *argv[]){
 	heap_intf hp;
 	std::srand(240);
+	int num = 0;
+	char a = 's';
 
 	for(int i = 0; i < atoi(argv[1]); i++){
+		num = std::rand()%100;
+		if((num >= 65) && (num <= 90))
+			a = num;
 		Heap_node *node = new Heap_node();
-		Data d = hp.create_datapacket(std::rand()%200,'s');
+		Data d = hp.create_datapacket(num, a);
 		node->data = d;
 		hp.insert_into_tree(node, hp.root);
 	}
+	
+	Heap_node *temp = NULL;
+	while((hp.root->right == NULL) && (hp.root->left == NULL)){
+		if(!hp.check_min_heap()){
+			Node *list_node = new Node();
+			heapify(hp.root)
+			hp.insert_in_front(heapify(hp.root));
+		}		
+
 
 	hp.print_tree(hp.root);
+
+
 
 	return 0;
 }
