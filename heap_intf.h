@@ -16,7 +16,7 @@ class Heap_node : public Data
 
 };
 
-class heap_intf : public Heap_node
+class heap_intf : public list_intf, public Heap_node
 {
 	public:
 		Heap_node *root;
@@ -32,8 +32,7 @@ class heap_intf : public Heap_node
 		bool min_heap(Heap_node *node);
 		bool check_min_heap();
 		int get_tree_depth();
-		//Heap_node *swap_root(Heap_node *node);	//to be implemented
-
+		Heap_node *swap_root(Heap_node *node);
 };
 
 #endif //HEAP_INTF_H

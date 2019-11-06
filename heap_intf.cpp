@@ -143,9 +143,9 @@ void heap_intf::heapify(Heap_node *begin){		//writing for min heap
 	
 }
 
-Heap_node *swap_root(Heap_node *node){
+Heap_node * heap_intf::swap_root(Heap_node *node){
 	Heap_node *root = this->root;
-	Heap_node *temp  = NULL;
+	//Heap_node *temp  = NULL;
 	while(node->left != NULL)
 		node = node->left;
 	while(node->right_sib != NULL)
@@ -155,7 +155,7 @@ Heap_node *swap_root(Heap_node *node){
 		node->prev->left = NULL;
 	else if(node->prev->right != NULL)
 		node->prev->right = NULL;
-	node->prev = root-prev;
+	node->prev = root->prev;
 	if(node->left_sib != NULL)
 		node->left_sib->right_sib = NULL;
 	node->left_sib = root->left_sib;
@@ -182,6 +182,7 @@ int heap_intf::get_tree_depth(){
 
 bool heap_intf::check_min_heap(){
 	int dep = heap_intf::get_tree_depth();
+	DEBUG(dep);
 	Heap_node *node = this->root;
 	while(dep != 0){
 		if(heap_intf::min_heap(node)){
@@ -227,21 +228,25 @@ int main(int argc, char *argv[]){
 		if((num >= 65) && (num <= 90))
 			a = num;
 		Heap_node *node = new Heap_node();
-		Data d = hp.create_datapacket(num, a);
+		Data d = hp.list_intf::create_datapacket(num, a);
 		node->data = d;
 		hp.insert_into_tree(node, hp.root);
 	}
 	
-	Heap_node *temp = NULL;
-	while((hp.root->right == NULL) && (hp.root->left == NULL)){
-		if(!hp.check_min_heap()){
-			Node *list_node = new Node();
-			heapify(hp.root)
-			hp.insert_in_front(heapify(hp.root));
-		}		
-
-
 	hp.print_tree(hp.root);
+	//Heap_node *temp = NULL;
+	while((hp.root->right != NULL) && (hp.root->left != NULL)){
+		if(!hp.check_min_heap()){
+			//Node *list_node = new Node();
+			hp.heapify(hp.root);
+		}
+		else{
+			hp.list_intf::insert_in_front(hp.swap_root(hp.root)->data);	
+		}
+	}
+
+	std::cout << " " << std::endl;
+	hp.list_intf::display_list();
 
 
 

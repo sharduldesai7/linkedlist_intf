@@ -81,7 +81,7 @@ void list_intf::remove_node(Node *node){
 		prev_node->next = next_node;
 	if (next_node != NULL)
 		next_node->prev = prev_node;
-	delete node;
+	//delete node;
 	return;
 }
 
