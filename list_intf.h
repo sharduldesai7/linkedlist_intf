@@ -10,6 +10,7 @@ class Data
 	int int_data;
 	char char_data;
 	Data create_datapacket(int i_data, char c_data);
+	void print_datapacket(Data data);
 };
 
 class Node : public Data

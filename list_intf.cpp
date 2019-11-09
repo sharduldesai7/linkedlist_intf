@@ -61,7 +61,7 @@ void list_intf::display_list(){
 	Node *current = this->current;
 	while(current != NULL){
 		//DEBUG("in display");
-		std::cout << current->data.int_data << current->data.char_data << std::endl;
+		std::cout << current->data.int_data << current->data.char_data << " ";;
 		current = current->next;
 	}
 	return;
@@ -72,6 +72,11 @@ Data Data::create_datapacket(int int_data, char char_data){
 	data.int_data = int_data;
 	data.char_data = char_data;
 	return data;
+}
+
+void Data::print_datapacket(Data data){
+	std::cout << data.int_data << data.char_data << " ";
+	return;
 }
 
 void list_intf::remove_node(Node *node){
@@ -88,7 +93,7 @@ void list_intf::remove_node(Node *node){
 list_intf::~list_intf(){
 	delete head;
 	delete current;
-	std::cout << "List deleted" << endl;
+	//std::cout << "List deleted" << endl;
 }
 
 

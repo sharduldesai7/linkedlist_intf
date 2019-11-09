@@ -27,8 +27,8 @@ class heap_intf : public list_intf, public Heap_node
 		~heap_intf();
 		void insert_into_tree(Heap_node *node, Heap_node *current);
 		void print_tree(Heap_node *node);
-		void heapify(Heap_node *begin);
-		Heap_node *swap_parent(Heap_node *parent, Heap_node *child, bool child_branch);
+		void heapify(Heap_node *begin, int depth);
+		void swap_node_data(Heap_node *parent, Heap_node *child);
 		bool min_heap(Heap_node *node);
 		bool check_min_heap();
 		int get_tree_depth();

@@ -7,4 +7,4 @@ $(PROG):$(SRCS)
 	$(CC) $(CFLAGS) -o $(PROG) $(SRCS)
 
 clean:
-	rm -rf *o list_intf
+	rm -rf *o heap_intf

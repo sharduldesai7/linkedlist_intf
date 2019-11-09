@@ -12,4 +12,7 @@
 #define TRUE	1
 #define FALSE	0
 
+#define LEFT	0
+#define RIGHT	1
+
 #endif //INCLUDEME_H
