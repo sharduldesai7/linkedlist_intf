@@ -14,6 +14,7 @@ Example input:
 ```
 
 int1 = seed for randomiser (basically any reasonable number)
+
 int2 = number of entries
 
 The heapsort generates random inputs. You don't have to give them.
